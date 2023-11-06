@@ -1,9 +1,9 @@
 FROM golang:1.18 as build
-WORKDIR /hackathon
-
+WORKDIR /go/src/app
 COPY . .
+RUN go mod download
+RUN CGO_ENABLED=0 go build -o /go/bin/app
 
-RUN go build main.go
-
-EXPOSE 8080
-CMD ["./main"]
+FROM gcr.io/distroless/static-debian11
+COPY --from=build /go/bin/app /
+CMD ["./app"]
