@@ -42,7 +42,6 @@ func init() {
 	mysqlPwd := os.Getenv("MYSQL_PASSWORD")
 	mysqlHost := os.Getenv("MYSQL_HOST")
 	mysqlDatabase := os.Getenv("MYSQL_DATABASE")
-	fmt.Print(mysqlUser, mysqlPwd, mysqlDatabase)
 
 	connStr := fmt.Sprintf("%s:%s@%s/%s", mysqlUser, mysqlPwd, mysqlHost, mysqlDatabase)
     db, err := sql.Open("mysql", connStr)
@@ -53,7 +52,7 @@ func init() {
 	if err := _db.Ping(); err != nil {
 		log.Fatalf("fail: _db.Ping, %v\n", err)
 	}
-	db = _db
+
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
