@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	"github.com/oklog/ulid/v2"
 	_ "github.com/oklog/ulid/v2"
 	"log"
@@ -36,19 +37,19 @@ var db *sql.DB
 
 func init() {
 	// ①-1
+	
 	mysqlUser := os.Getenv("MYSQL_USER")
-	mysqlPwd := os.Getenv("MYSQL_PWD")
+	mysqlPwd := os.Getenv("MYSQL_PASSWORD")
 	mysqlHost := os.Getenv("MYSQL_HOST")
 	mysqlDatabase := os.Getenv("MYSQL_DATABASE")
 
 	connStr := fmt.Sprintf("%s:%s@%s/%s", mysqlUser, mysqlPwd, mysqlHost, mysqlDatabase)
-	db, err := sql.Open("mysql", connStr)
-
+    db, err := sql.Open("mysql", connStr)
 	if err != nil {
 		log.Fatalf("fail: sql.Open, %v\n", err)
 	}
 	// ①-3
-	if err := db.Ping(); err != nil {
+	if err := _db.Ping(); err != nil {
 		log.Fatalf("fail: _db.Ping, %v\n", err)
 	}
 
@@ -170,7 +171,7 @@ func main() {
 
 	// 8000番ポートでリクエストを待ち受ける
 	log.Println("Listening...")
-	if err := http.ListenAndServe(":8000", nil); err != nil {
+	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
 }
