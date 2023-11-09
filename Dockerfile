@@ -1,4 +1,4 @@
-FROM golang:1.18 as build
+FROM golang:1.21 as build
 
 WORKDIR /go/src/app
 COPY . .
@@ -8,4 +8,4 @@ RUN go build -o /go/bin/app
 
 CMD ["/go/bin/app"]
 
-EXPOSE 8050
+EXPOSE 8080
